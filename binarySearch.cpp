@@ -159,7 +159,7 @@ public:
     }
 
     // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&envId=top-interview-150
-    vector<int> twoSum(vector<int> &numbers, int target)
+    vector<int> twoSum_(vector<int> &numbers, int target)
     {
         vector<int> ans;
 
@@ -235,8 +235,67 @@ public:
         }
         return nums[start];
     }
+    int mySqrt(int x)
+    {
+        long int i = 0, j = pow(2, 32) - 1;
+        while (i < j)
+        {
+            long int mid = (i + j) / 2;
+            if ((mid * mid) == x)
+                return mid;
+            else if ((mid * mid) > x)
+                j = mid - 1;
+            else
+                i = mid + 1;
+        }
+        return j;
+    }
+    int peakIndexInMountainArray(vector<int> &arr)
+    {
+        int start = 0, end = arr.size() - 1;
+        while (start < end)
+        {
+            int mid = (start + end) / 2;
+
+            if (arr[mid + 1] > arr[mid])
+                start = mid + 1;
+            else
+                end = mid;
+        }
+        return start;
+    }
+    double timeRequired(vector<int> &dist, int speed)
+    {
+        double time = 0.0;
+        for (int i = 0; i < dist.size(); i++)
+        {
+
+            double t = ((double)dist[i] / (double)speed);
+            time += (i == dist.size() - 1) ? t : ceil(t);
+        }
+        return time;
+    }
+    int minSpeedOnTime(vector<int> &dist, double hour)
+    {
+        int i = 1, j = 1e7, ans = -1;
+        while (i <= j)
+        {
+            int mid = (i + j) / 2;
+            if (timeRequired(dist, mid) <= hour)
+            {
+                ans = mid;
+                j = mid - 1;
+            }
+            else
+                i = mid + 1;
+        }
+        return ans;
+    }
 };
 int main()
 {
+    Solution s;
+    vector<int> v{1, 3, 2};
+    s.minSpeedOnTime(v, 2.7);
     return 0;
 }

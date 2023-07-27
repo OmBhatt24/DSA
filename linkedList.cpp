@@ -62,6 +62,23 @@ public:
         }
         return true;
     }
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        ListNode *prev = head, *current = head, *nextNode = (current->next) ? current->next : NULL, *headPtr = head;
+        while (nextNode->next)
+        {
+            if (current->val == nextNode->val)
+            {
+                if (current == headPtr)
+                    headPtr = nextNode->next;
+                prev->next = nextNode->next;
+            }
+            prev = current;
+            current = nextNode;
+            nextNode = (nextNode->next) ? nextNode->next : NULL;
+        }
+        return headPtr;
+    }
 };
 
 int main()

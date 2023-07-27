@@ -167,16 +167,17 @@ public:
     vector<string> removeAnagrams(vector<string> &words)
     {
         vector<string> ans;
-        map<string, string> mp;
+        string prev = "";
         for (auto word : words)
         {
             string temp = word;
             sort(temp.begin(), temp.end());
-            if (!mp.count(temp))
-                mp[temp] = word;
+            if (temp != prev)
+            {
+                ans.push_back(word);
+            }
+            prev = temp;
         }
-        for (auto i : mp)
-            ans.push_back(i.second);
         return ans;
     }
 };

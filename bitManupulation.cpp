@@ -55,9 +55,21 @@ public:
         }
         return -1;
     }
+    // https://leetcode.com/problems/single-number-ii/
+    int singleNumber(vector<int> &nums)
+    {
+        int i = 0;
+        for (auto j : nums)
+        {
+            i = (i ^ j);
+        }
+        return i + 1;
+    }
 };
 int main()
 {
-
+    Solution s;
+    vector<int> v{1, 2, 4, 5, 6, 4, 3, 2};
+    s.singleNumber(v);
     return 0;
 }

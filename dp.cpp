@@ -316,6 +316,81 @@ public:
         vector<int> dp(questions.size(), -1);
         return mostPointsRec(0, questions, dp);
     }
+    int recForLongestSubsequence(int idx, int prev, int len, int difference, vector<int> &arr)
+    {
+        if (idx == arr.size())
+            return len;
+        if ((arr[idx] - prev) == difference)
+            return recForLongestSubsequence(idx + 1, arr[idx], len + 1, difference, arr);
+        else
+            return recForLongestSubsequence(idx + 1, prev, len, difference, arr);
+    }
+    int longestSubsequenceREC(vector<int> &arr, int difference)
+    {
+        return recForLongestSubsequence(0, 0, 0, difference, arr);
+    }
+    int longestSubsequence(vector<int> &arr, int difference)
+    {
+        int n = arr.size();
+        int ans = 0;
+        unordered_map<int, int> dp;
+        for (int i = 0; i < n; i++)
+        {
+            dp[arr[i]] = 1 + dp[arr[i] - difference];
+            ans = max(ans, dp[arr[i]]);
+        }
+        return ans;
+    }
+
+    // https://practice.geeksforgeeks.org/problems/longest-arithmetic-progression1019/1
+    int solveLenOfLongestAP(int idx, int diff, int A[])
+    {
+        if (idx < 0)
+            return 0;
+        int ans = 0;
+        for (int i = idx - 1; i >= 0; i--)
+        {
+            if (A[idx] - A[i] == diff)
+            {
+                ans = max(ans, 1 + solveLenOfLongestAP(i, diff, A));
+            }
+        }
+        return ans;
+    }
+    int lengthOfLongestAP(int A[], int n)
+    {
+        if (n <= 2)
+            return n;
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                ans = max(ans, 2 + solveLenOfLongestAP(i, A[j] - A[i], A));
+            }
+        }
+        return ans;
+    }
+    int lengthOfLongestAP(int A[], int n)
+    {
+        if (n <= 2)
+            return n;
+        int ans = 0;
+        unordered_map<int, int> dp[n + 1];
+        for (int i = 1; i < n; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                int diff = A[i] - A[j];
+                int cnt = 1;
+                if (dp[j].count(diff))
+                    cnt = dp[j][diff];
+                dp[i][diff] = 1 + cnt;
+                ans = max(ans, dp[i][diff]);
+            }
+        }
+        return ans;
+    }
 };
 
 int main()

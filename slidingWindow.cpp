@@ -66,7 +66,51 @@ public:
         // after the complete traversal, if we don't find a pair to satisfy the condition, return false
         return false;
     }
+
+    int maxConsecutiveAnswers(string answerKey, int k)
+    {
+        // int ans = 0, i = 0, j = 0, n = answerKey.size(), key = k;
+        // while (j < n)
+        // {
+        //     if (answerKey[j] != answerKey[i] && key > 0)
+        //         key--;
+        //     else if (answerKey[j] != answerKey[i] && key <= 0)
+        //     {
+        //         ans = max(ans, j - i + 1);
+        //         i++;
+        //         key = k;
+        //     }
+        //     if (key != 0)
+        //         j++;
+        // }
+        // return ans;
+
+        int ans = 0, i = 0, j = 1, count = 1;
+        int temp = k;
+        while (j < answerKey.size())
+        {
+            if (answerKey[i] == answerKey[j])
+                count++;
+            else if (answerKey[i] != answerKey[j] && temp > 0)
+            {
+                temp--;
+                count++;
+            }
+            else
+            {
+                i++;
+                // j = i;
+                temp = k;
+                ans = max(ans, count);
+                count = 1;
+            }
+            j++;
+        }
+        ans = max(count, ans);
+        return ans;
+    }
     // https://practice.geeksforgeeks.org/problems/max-sum-subarray-of-size-k5313/1
+
     long maximumSumSubarray(int K, vector<int> &Arr, int N)
     {
         // code here
@@ -210,6 +254,25 @@ public:
                 sum -= nums[i];
                 i++;
             }
+        }
+        return ans;
+    }
+
+    int maxVowels(string s, int k)
+    {
+        int ans = 0, temp = 0, i = 0, j = 0;
+        while (j < s.size())
+        {
+            if (s[j] == 'a' || s[j] == 'e' || s[j] == 'i' || s[j] == 'o' || s[j] == 'u')
+                temp++;
+            if (j - i + 1 == k)
+            {
+                ans = max(ans, temp);
+                if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u')
+                    temp--;
+                i++;
+            }
+            j++;
         }
         return ans;
     }

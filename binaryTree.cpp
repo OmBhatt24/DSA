@@ -290,9 +290,40 @@ bool hasPathSum(TreeNode *root, int targetSum)
 
     return hasPathSum(root->left, targetSum - root->val) || hasPathSum(root->right, targetSum - root->val);
 }
-
-vector<TreeNode *> allPossibleFBT(int n)
+int minDepth(TreeNode *root)
 {
+    if (!root)
+        return 0;
+    int left = minDepth(root->left);
+    int right = minDepth(root->right);
+    if (root->left && root->right)
+        return 1 + min(left, right);
+    return 1 + max(left, right);
+}
+vector<vector<int>> levelOrder(TreeNode *root)
+{
+    vector<vector<int>> ans;
+    if (!root)
+        return ans;
+    queue<TreeNode *> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        vector<int> temp;
+        for (int i = 0; i < q.size(); i++)
+        {
+            TreeNode *node = q.front();
+            cout << "i:" << i << " val: " << node->val << endl;
+            q.pop();
+            if (node->left)
+                q.push(node->left);
+            if (node->right)
+                q.push(node->right);
+            temp.push_back(node->val);
+        }
+        ans.push_back(temp);
+    }
+    return ans;
 }
 int main()
 {
