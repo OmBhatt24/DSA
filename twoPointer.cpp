@@ -7,19 +7,16 @@ class Solution
 public:
     int findDuplicate(vector<int> &nums)
     {
-        int i = 0, j = 0;
-        while (i < nums.size())
+        sort(nums.begin(), nums.end());
+        int i = 0, j = 1;
+        while (j < nums.size())
         {
-            if (j == nums.size())
-            {
-                i++;
-                j = i;
-            }
             if (nums[i] == nums[j])
                 return nums[i];
+            i++;
             j++;
         }
-        return 0;
+        return -1;
     }
     // https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/?envType=study-plan-v2&envId=top-interview-150
     int removeDuplicates(vector<int> &nums)

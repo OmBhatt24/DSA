@@ -325,6 +325,19 @@ vector<vector<int>> levelOrder(TreeNode *root)
     }
     return ans;
 }
+int max_val = INT_MIN;
+int goodNodesTemp(TreeNode *root, int maxVal)
+{
+    if (!root)
+        return 0;
+    return (root->val >= maxVal) ? 1 + goodNodesTemp(root->left, root->val) + goodNodesTemp(root->right, root->val) : goodNodesTemp(root->right, maxVal) + goodNodesTemp(root->left, maxVal);
+}
+int goodNodes(TreeNode *root)
+{
+    if (!root)
+        return 0;
+    return goodNodesTemp(root, INT_MIN);
+}
 int main()
 {
     BstNode *root = NULL;

@@ -12,7 +12,7 @@ bool wordPattern(string pattern, string s)
     {
         if (mp.count(temp[0]))
         {
-            if (mp[pattern[i++]] != temp[0)
+            if (mp[pattern[i++]] != temp[0])
                 return false;
         }
         else

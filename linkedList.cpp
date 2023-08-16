@@ -79,6 +79,62 @@ public:
         }
         return headPtr;
     }
+    ListNode *oddEvenList(ListNode *head)
+    {
+        if (!head || head->next)
+            return head;
+        ListNode *odd = head, *even = head->next, *evenHead = head->next;
+        while (even && even->next)
+        {
+            odd->next = odd->next->next;
+            odd = odd->next;
+            even->next = even->next->next;
+            even->next;
+        }
+        odd->next = evenHead;
+
+        return head;
+    }
+
+    int getLength(ListNode *head)
+    {
+        int count = 0;
+        ListNode *p = head;
+        while (p)
+        {
+            count++;
+            p = p->next;
+        }
+        return count;
+    }
+    ListNode *rotateList(ListNode *head)
+    {
+        if (!head || !head->next)
+            return head;
+        ListNode *p = head, *q = head->next;
+        while (q->next)
+        {
+            p = p->next;
+            q = q->next;
+        }
+        q->next = head;
+        head = q;
+        p->next = NULL;
+        return head;
+    }
+    ListNode *rotateRight(ListNode *head, int k)
+    {
+        if (!head || k == 0)
+            return head;
+
+        int len = getLength(head);
+        k %= len;
+        while (k--)
+        {
+            head = rotateList(head);
+        }
+        return head;
+    }
 };
 
 int main()

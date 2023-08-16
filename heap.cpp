@@ -12,6 +12,7 @@ int findKthLargest(vector<int> &nums, int k)
 
     return pq.top();
 }
+
 // https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/
 int maxProduct(vector<int> &nums)
 {

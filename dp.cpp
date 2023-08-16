@@ -391,6 +391,10 @@ public:
         }
         return ans;
     }
+
+    int numDecodings(string s)
+    {
+    }
 };
 
 int main()

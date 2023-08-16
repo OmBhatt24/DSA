@@ -84,32 +84,47 @@ public:
     vector<vector<int>> merge(vector<vector<int>> &intervals)
     {
         vector<vector<int>> ans;
-        int i = 0;
-        while (i < intervals.size())
+        sort(intervals.begin(), intervals.end());
+        for (auto i : intervals)
         {
-            int k = i;
-            while (i + 1 < intervals.size() && intervals[i][1] > intervals[i + 1][0])
+            if (ans.empty() || ans.back()[1] < i[0])
             {
-                if (intervals[i][0] < intervals[i + 1][0])
-                    k = i;
-                i++;
+                ans.push_back(i);
             }
-            ans.push_back({intervals[k][0], intervals[i][1]});
-            i++;
+            else
+            {
+                ans.back()[1] = max(i[1], ans.back()[1]);
+            }
+        }
+        return ans;
+    }
+
+    vector<vector<int>> insert(vector<vector<int>> &intervals, vector<int> &newInterval)
+    {
+        vector<vector<int>> ans;
+        for (auto i : intervals)
+        {
+            if (ans.empty() || ans.back()[1] > i[0])
+            {
+                ans.push_back(i);
+            }
+            else
+            {
+                ans.back()[1] = max(i[i], ans.back()[1]);
+            }
         }
         return ans;
     }
     bool canJump(vector<int> &nums)
     {
-        int i = 1;
-        for (int j = 0; j < nums.size(); j++)
+        int reachable = 0;
+        for (int i = 0; i < nums.size(); i++)
         {
-            i += nums[i];
-            if (i == nums.size() - 1)
-                return true;
+            if (i > reachable)
+                return false;
+            reachable = max(reachable, i + nums[i]);
         }
-
-        return false;
+        return true;
     }
     // https://leetcode.com/problems/find-the-highest-altitude
     int largestAltitude(vector<int> &gain)
@@ -122,6 +137,7 @@ public:
         }
         return *max_element(altitudes.begin(), altitudes.end());
     }
+    
     vector<int> productExceptSelf(vector<int> &nums)
     {
         vector<int> ans(nums.size());
@@ -180,10 +196,53 @@ public:
         }
         return ans;
     }
+    int sumOfDigits(int n)
+    {
+        int ans = 0;
+        while (n > 0)
+        {
+            ans += (n % 10);
+            n /= 10;
+        }
+        return ans;
+    }
+    int temp(int n1, int n2)
+    {
+        // test case 10,19
+        int a = n1, b = n2;
+        while (a != b)
+        {
+            a += sumOfDigits(a);
+            b += sumOfDigits(b);
+            cout << "a: " << a << " b: " << b << endl;
+        }
+        return a;
+    }
+
+    int removeDuplicates(vector<int> &nums)
+    {
+        int count = 0, i = 0, prev = nums[0];
+        while (i < nums.end() - nums.begin())
+        {
+            if (nums[i] == prev)
+                count++;
+            else
+            {
+                prev = nums[i + 1];
+                count = 0;
+            }
+            if (count > 2)
+            {
+                nums.erase(nums.begin() + i);
+                continue;
+            }
+            i++;
+        }
+        return nums.size();
+    }
 };
 
 int main()
 {
-
     return 0;
 }

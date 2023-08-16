@@ -65,7 +65,19 @@ public:
         }
         return i + 1;
     }
+    int hammingWeight(uint32_t n)
+    {
+        int ans = 0;
+        while (n > 0)
+        {
+            uint16_t temp = 1;
+            ans += (n & temp);
+            n >>= 1;
+        }
+        return ans;
+    }
 };
+
 int main()
 {
     Solution s;
